@@ -54,26 +54,28 @@ class Nate extends Component {
 
   // Algorithm to count occurences of words
   countOccurences(content) {
-    let wordTokens = content.split(/\W+/);
-    let wordDictionary = {};
-    // iterate through all words
-    for (var i = 0; i < wordTokens.length; i++) {
-      var currentWord = wordTokens[i];
-      if (wordDictionary.hasOwnProperty(currentWord)) {
-        wordDictionary[currentWord]++;
-      } else {
-        wordDictionary[currentWord] = 1;
-        // used to flag function is working and results are being loaded
-        this.setState({ testPassed: 1 });
+    if (content !== null) {
+      let wordTokens = content.split(/\W+/);
+      let wordDictionary = {};
+      // iterate through all words
+      for (var i = 0; i < wordTokens.length; i++) {
+        var currentWord = wordTokens[i];
+        if (wordDictionary.hasOwnProperty(currentWord)) {
+          wordDictionary[currentWord]++;
+        } else {
+          wordDictionary[currentWord] = 1;
+          // used to flag function is working and results are being loaded
+          this.setState({ testPassed: 1 });
+        }
       }
+      this.checkEmpty(wordDictionary);
+      this.setState({ wordDict: wordDictionary });
+      console.log(wordDictionary);
+      let historyObject = {};
+      // save new object with pair of link and saved data
+      historyObject[this.state.value] = wordDictionary;
+      this.setState({ historyObj: [...this.state.historyObj, historyObject] });
     }
-    this.checkEmpty(wordDictionary);
-    this.setState({ wordDict: wordDictionary });
-    console.log(wordDictionary);
-    let historyObject = {};
-    // save new object with pair of link and saved data
-    historyObject[this.state.value] = wordDictionary;
-    this.setState({ historyObj: [...this.state.historyObj, historyObject] });
   }
 
   checkEmpty(wordDic) {
